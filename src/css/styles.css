@@ -11,7 +11,7 @@ body {
     Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';  
 
-  background-image: url('../images/bg-pattern.png');
+  background-image: url('../images/bg-pattern.png');  
 }
 
 img {
@@ -83,4 +83,34 @@ li {
   justify-content: space-evenly;  
 
   background-color: lightblue;
+}
+
+.home-btn {
+  display: inline-block;
+  width: 40px;
+
+  padding: 10px;
+
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+
+  text-align: center;
+  text-decoration: none;
+  
+  background-color: cornflowerblue;
+  color: white;
+  border-color:  #ffffff;
+  border-radius: 3px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
 }

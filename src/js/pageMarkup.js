@@ -16,6 +16,7 @@ function onSearch(event) {
     if (imagesApiService.query === '') {
       imagesApiService.resetPage();
       clearImageListContainer();
+      refs.homeBtn.classList.add('visually-hidden');
   
       error({
         text: "Empty string! Please re-enter query!",        
@@ -34,7 +35,8 @@ function onSearch(event) {
     
     imagesApiService.resetPage();
     clearImageListContainer();
-    fetchImages();    
+    fetchImages();
+    refs.homeBtn.classList.remove('visually-hidden');    
   };
   
   function fetchImages() {    
