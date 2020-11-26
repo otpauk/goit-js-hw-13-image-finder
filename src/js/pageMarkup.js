@@ -5,17 +5,23 @@ import '@pnotify/core/dist/BrightTheme.css';
 import ImagesApiService from './apiService';
 import refs from './refs';
 import { error } from '@pnotify/core';
+import infinitScroll from './infinitScroll';
 
 const imagesApiService = new ImagesApiService();
 
 function onSearch(event) {
-    event.preventDefault();
+    event.preventDefault();   
     
     imagesApiService.query = event.currentTarget.elements.query.value;
     
-    if (imagesApiService.query === '') {
-      imagesApiService.resetPage();
-      clearImageListContainer();
+    imagesApiService.resetPage();
+    clearImageListContainer(); 
+    
+    infinitScroll.observer.observe(refs.pageEnd);
+    
+    if (imagesApiService.query === '') {      
+      infinitScroll.observer.unobserve(refs.pageEnd);      
+
       refs.homeBtn.classList.add('visually-hidden');
   
       error({
@@ -31,19 +37,15 @@ function onSearch(event) {
       });
 
       return;
-    };  
-    
-    imagesApiService.resetPage();
-    clearImageListContainer();
-    fetchImages();
-    refs.homeBtn.classList.remove('visually-hidden');    
+    };    
   };
   
-  function fetchImages() {    
-    imagesApiService.fetchImages().then(hits => {
-      if (hits.length === 0) {
-        imagesApiService.resetPage();
-        clearImageListContainer();
+  function loadImages() {
+    imagesApiService.fetchImages().then(hits => { 
+      if (imagesApiService.query !== '' && hits.length === 0) { 
+        infinitScroll.observer.unobserve(refs.pageEnd);       
+        
+        refs.homeBtn.classList.add('visually-hidden');
 
         error({
           text: "No such images! Please re-enter query!",        
@@ -59,10 +61,16 @@ function onSearch(event) {
 
         return;
       };
+      
+      if (hits.length > 0 && hits.length < 12) {
+        infinitScroll.observer.unobserve(refs.pageEnd);
+      };
      
       appendImageListMarkup(hits);
-      imagesApiService.incrementPage();          
-    });   
+      
+      refs.homeBtn.classList.remove('visually-hidden'); 
+      imagesApiService.incrementPage();            
+    });    
   };
   
   function appendImageListMarkup(hits) {
@@ -75,6 +83,6 @@ function onSearch(event) {
 
   export default {
     onSearch,
-    fetchImages,
+    loadImages,
     imagesApiService,
   };
