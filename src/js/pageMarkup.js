@@ -62,7 +62,7 @@ function onSearch(event) {
      
       appendImageListMarkup(hits);
       imagesApiService.incrementPage();          
-    });
+    });   
   };
   
   function appendImageListMarkup(hits) {

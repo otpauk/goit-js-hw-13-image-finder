@@ -1,8 +1,5 @@
 import markup from './pageMarkup';
 
-/**
-* Observer
-*/
 const observerCallback = entries => {  
   entries.forEach(entry => {
     if (entry.isIntersecting && markup.imagesApiService.query !== '') {      

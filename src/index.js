@@ -6,5 +6,4 @@ import infinitScroll from './js/infinitScroll';
 refs.searchInput.addEventListener('submit', markup.onSearch);
 refs.imageGallery.addEventListener("click", onImageClick);
 
-// tell Observer what to observe
 infinitScroll.observer.observe(refs.pageEnd);
